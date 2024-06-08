@@ -7,3 +7,9 @@ export interface ITable {
     effectiveDate: string;
     rates: Array<IRate>;
 }
+
+export enum TableType {
+    A = 'A',
+    B = 'B',
+    C = 'C',
+}

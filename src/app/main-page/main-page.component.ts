@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TableType } from '../shared/tables/tables.model';
 import { TableService } from '../shared/tables/tables.service';
 
 @Component({
@@ -8,21 +9,37 @@ import { TableService } from '../shared/tables/tables.service';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })
 export class MainPageComponent {
 
-  constructor(public tableService: TableService) { }
+  public formGroup!: FormGroup;
+  public tableTypes = TableType;
 
-  public changeTableType(event: Event) {
-    this.tableService.getTable((event.target as HTMLSelectElement).value).subscribe();
+  constructor(
+    public tableService: TableService,
+    private formBuilder: FormBuilder,
+  ) {
+    this.formGroup = this.formBuilder.group({
+      type: new FormControl(TableType.C),
+      effectiveDate: new FormControl(formatDate(Date.now(), 'yyyy-MM-dd', 'en')),
+    });
   }
 
-  public changeTableDate(event: Event) {
-    const tableType = (document.getElementById('type') as HTMLSelectElement).value;
-    this.tableService.getTableByDate(tableType, (event.target as HTMLInputElement).value).subscribe();
+  public changeTableType() {
+    this.tableService.getTableByDate(
+      this.formGroup.controls['type'].value,
+      this.formGroup.controls['effectiveDate'].value)
+      .subscribe();
+  }
+
+  public changeTableDate() {
+    this.tableService.getTableByDate(
+      this.formGroup.controls['type'].value,
+      this.formGroup.controls['effectiveDate'].value)
+      .subscribe();
   }
 }

@@ -1,33 +1,33 @@
 <div class="relative overflow-x-auto p-4 shadow-md sm:rounded-lg border">
-    <div class="w-80 space-y-1">
-        <div class="flex justify-between items-center">
-            <label for="type" class="block font-medium leading-6">Typ tabeli:</label>
-            <div>
-                <select name="type" id="type"
-                    class="block w-full rounded-md border-0 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-500 "
-                    (change)="changeTableType($event)">
-                    <option>A</option>
-                    <option>B</option>
-                    <option selected="selected">C</option>
-                </select>
+    <form [formGroup]="formGroup">
+        <div class="w-80 space-y-1">
+            <div class="flex justify-between items-center">
+                <label for="type" class="block font-medium leading-6">Typ tabeli:</label>
+                <div>
+                    <select id="type" formControlName="type"
+                        class="block w-full rounded-md border-0 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-500 "
+                        (change)="changeTableType()">
+                        <option value="{{tableTypes.A}}">{{tableTypes.A}}</option>
+                        <option value="{{tableTypes.B}}">{{tableTypes.B}}</option>
+                        <option value="{{tableTypes.C}}">{{tableTypes.C}}</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="flex justify-between">
-            <label class="block font-medium leading-6">Numer tabeli:</label>
-            <span>{{tableService.table()?.no}}</span>
-        </div>
-        <div class="flex justify-between">
-            <label class="block font-medium leading-6">Data notowania:</label>
-            <span>{{tableService.table()?.tradingDate}}</span>
-        </div>
-        <form>
+            <div class="flex justify-between">
+                <label class="block font-medium leading-6">Numer tabeli:</label>
+                <span>{{tableService.table()?.no}}</span>
+            </div>
+            <div class="flex justify-between">
+                <label class="block font-medium leading-6">Data notowania:</label>
+                <span>{{tableService.table()?.tradingDate}}</span>
+            </div>
             <div class="flex justify-between items-baseline">
                 <label class="block font-medium leading-6">Data publikacji:</label>
-                <input type="date" id="effectiveDate" name="effectiveDate" (change)="changeTableDate($event)"
-                class="rounded-md border-0 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-blue-500" />
+                <input type="date" id="effectiveDate" (change)="changeTableDate()" formControlName="effectiveDate"
+                    class="rounded-md border-0 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-blue-500" />
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
     <table class="w-full text-base text-left rtl:text-right">
         <thead class="text-lg uppercase">
             <tr>
