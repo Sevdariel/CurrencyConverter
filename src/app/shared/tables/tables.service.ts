@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { Observable, mergeMap, tap } from 'rxjs';
+import { Observable, merge, mergeMap, tap } from 'rxjs';
 import { ITable } from './tables.model';
 
 @Injectable({
@@ -18,10 +18,16 @@ export class TableService {
     return this.httpClient.get<Array<ITable>>(`${this.baseUrl}/${tableName}`)
       .pipe(
         mergeMap(table => table),
-        tap(table => {
-          this.setSourceTable(table)
-        })
+        tap(table => this.setSourceTable(table)),
       );
+  }
+
+  public getTableByDate(tableName: string, date: string): Observable<ITable> {
+    return this.httpClient.get<Array<ITable>>(`${this.baseUrl}/${tableName}/${date}`)
+      .pipe(
+        mergeMap(table => table),
+        tap(table => this.setSourceTable(table)),
+      )
   }
 
   private setSourceTable(table: ITable) {
