@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { Observable, mergeMap, tap } from 'rxjs';
 import { ITable } from './tables.model';
 
 @Injectable({
@@ -9,10 +9,22 @@ import { ITable } from './tables.model';
 export class TableService {
 
   private baseUrl = 'api/exchangerates/tables'
+  private sourceTable = signal<ITable | undefined>(undefined);
+  public table = this.sourceTable.asReadonly();
 
   constructor(private httpClient: HttpClient) { }
 
-  public getTable(table: string): Observable<ITable> {
-    return this.httpClient.get<ITable>(`${this.baseUrl}/${table}`);
+  public getTable(tableName: string): Observable<ITable> {
+    return this.httpClient.get<Array<ITable>>(`${this.baseUrl}/${tableName}`)
+      .pipe(
+        mergeMap(table => table),
+        tap(table => {
+          this.setSourceTable(table)
+        })
+      );
+  }
+
+  private setSourceTable(table: ITable) {
+    this.sourceTable.set(table);
   }
 }

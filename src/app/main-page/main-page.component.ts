@@ -1,7 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ITable } from '../shared/tables/tables.model';
-import { take } from 'rxjs';
+import { Component } from '@angular/core';
+import { TableService } from '../shared/tables/tables.service';
 
 @Component({
   selector: 'app-main-page',
@@ -12,17 +10,9 @@ import { take } from 'rxjs';
 })
 export class MainPageComponent {
 
-  private sourceTable = signal<ITable | undefined>(undefined);
-  public table = this.sourceTable.asReadonly();
+  constructor(public tableService: TableService) { }
 
-  constructor(activatedRoute: ActivatedRoute) {
-    activatedRoute.data
-      .pipe(take(1))
-      .subscribe(routeData => {
-        const routeTable: ITable = routeData['table'][0];
-        this.sourceTable.set(routeTable);
-      })
-
-      console.log(this.table())
+  public changeTableType(event: Event) {
+    this.tableService.getTable((event.target as HTMLSelectElement).value).subscribe();
   }
 }
