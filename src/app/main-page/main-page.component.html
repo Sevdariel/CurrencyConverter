@@ -33,9 +33,15 @@
             <tr>
                 <th scope="col" class="px-6 py-3">Waluta</th>
                 <th scope="col" class="px-6 py-3">Kod waluty</th>
+                @if(midValueExist()) {
                 <th scope="col" class="px-6 py-3">Średni kurs waluty</th>
+                }
+                @if(askValueExist()) {
                 <th scope="col" class="px-6 py-3">Kurs sprzedaży waluty</th>
+                }
+                @if(bidValueExist()) {
                 <th scope="col" class="px-6 py-3">Kurs kupna waluty</th>
+                }
             </tr>
         </thead>
         @for (rate of tableService.table()?.rates; track $index) {
@@ -43,9 +49,15 @@
             <tr class="odd:bg-white even:bg-gray-400 border-b">
                 <td class="px-6 py-4 font-medium whitespace-nowrap">{{rate.currency}}</td>
                 <td class="px-6 py-4">{{rate.code}}</td>
+                @if(midValueExist()) {
                 <td class="px-6 py-4">{{rate.mid}}</td>
+                }
+                @if(askValueExist()) {
                 <td class="px-6 py-4">{{rate.ask}}</td>
+                }
+                @if(bidValueExist()) {
                 <td class="px-6 py-4">{{rate.bid}}</td>
+                }
             </tr>
         </tbody>
         }

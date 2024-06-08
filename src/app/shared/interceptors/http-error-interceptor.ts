@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from "@angular/common/http";
 import { Observable, catchError } from "rxjs";
-import { ErrorMessages } from "./errorMessages";
+import { ErrorMessages } from "./error-messages";
 
 export function httpErrorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
     return next(req)
