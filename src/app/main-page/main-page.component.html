@@ -1,1 +1,9 @@
-<p>main-page works!</p>
+@for (rate of table()?.rates; track $index) {
+<ul>
+    <li>{{rate.currency}}</li>
+    <li>{{rate.code}}</li>
+    <li>{{rate.bid}}</li>
+    <li>{{rate.ask}}</li>
+    <li>{{rate.mid}}</li>
+</ul>
+}

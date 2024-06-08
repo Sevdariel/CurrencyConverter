@@ -1,0 +1,7 @@
+{
+    "/api": {
+        "target": "http://api.nbp.pl",
+        "secure": false,
+        "changeOrigin": true
+    }
+}
