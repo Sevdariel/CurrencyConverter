@@ -34,23 +34,21 @@ export class MainPageComponent {
       effectiveDate: new FormControl(formatDate(Date.now(), 'yyyy-MM-dd', 'en')),
     });
 
-    this.midValueExists();
-    this.askValueExists();
-    this.bidValueExists();
+    this.calculateColumnsVisibility();
   }
 
   public changeTableType() {
     this.tableService.getTableByDate(
       this.formGroup.controls['type'].value,
       this.formGroup.controls['effectiveDate'].value)
-      .subscribe();
+      .subscribe(() => this.calculateColumnsVisibility());
   }
 
   public changeTableDate() {
     this.tableService.getTableByDate(
       this.formGroup.controls['type'].value,
       this.formGroup.controls['effectiveDate'].value)
-      .subscribe();
+      .subscribe(() => this.calculateColumnsVisibility());
   }
 
   public midValueExists() {
@@ -63,5 +61,11 @@ export class MainPageComponent {
 
   public bidValueExists() {
     return this.bidValueExist.set(this.tableService.table()!.rates.some(rate => !!rate.bid))
+  }
+
+  private calculateColumnsVisibility() {
+    this.midValueExists();
+    this.askValueExists();
+    this.bidValueExists();
   }
 }
