@@ -1,8 +1,8 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TableType } from '../shared/tables/tables.model';
-import { ConverterService } from '../shared/tables/converter.service';
+import { TableType } from '../shared/models';
+import { ConverterService } from '../shared/services/converter.service';
 
 @Component({
   selector: 'app-main-page',

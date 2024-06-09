@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ConverterService } from '../shared/tables/converter.service';
+import { ConverterService } from '../shared/services/converter.service';
 
 @Component({
   selector: 'app-converter',
@@ -28,10 +28,6 @@ export class ConverterComponent implements OnInit {
       amount: new FormControl(0),
       secondCurrency: new FormControl(""),
     });
-  }
-
-  public change(event: Event) {
-    console.log(event)
   }
 
   public convert() {

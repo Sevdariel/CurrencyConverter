@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { forkJoin, merge, mergeMap, tap } from 'rxjs';
-import { ITable } from './tables.model';
-import { IRate } from '../rates/rates.model';
+import { forkJoin, mergeMap, tap } from 'rxjs';
+import { IRate, ITable } from '../models';
 
 @Injectable({
   providedIn: 'root'

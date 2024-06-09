@@ -1,4 +1,10 @@
-import { IRate } from "../rates/rates.model";
+export interface IRate {
+    currency: string;
+    code: string;
+    bid: number;
+    ask: number;
+    mid: number;
+}
 
 export interface ITable {
     table: string;
