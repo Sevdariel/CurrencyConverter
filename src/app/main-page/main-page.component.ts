@@ -1,8 +1,8 @@
 import { CommonModule, formatDate } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableType } from '../shared/tables/tables.model';
-import { TableService } from '../shared/tables/tables.service';
+import { ConverterService } from '../shared/tables/converter.service';
 
 @Component({
   selector: 'app-main-page',
@@ -14,7 +14,7 @@ import { TableService } from '../shared/tables/tables.service';
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
 
   public formGroup!: FormGroup;
   public tableTypes = TableType;
@@ -24,11 +24,11 @@ export class MainPageComponent {
   public bidValueExist = signal<boolean>(false);
 
   constructor(
-    public tableService: TableService,
+    public tableService: ConverterService,
     private formBuilder: FormBuilder,
-  ) {
+  ) { }
 
-    console.log(this.tableService.table()!.rates.some(rate => !!rate.mid))
+  public ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
       type: new FormControl(TableType.C),
       effectiveDate: new FormControl(formatDate(Date.now(), 'yyyy-MM-dd', 'en')),

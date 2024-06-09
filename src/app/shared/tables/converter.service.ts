@@ -1,18 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { mergeMap, tap } from 'rxjs';
+import { forkJoin, merge, mergeMap, tap } from 'rxjs';
 import { ITable } from './tables.model';
+import { IRate } from '../rates/rates.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TableService {
+export class ConverterService {
 
   private baseUrl = 'api/exchangerates/tables'
   private sourceTable = signal<ITable | undefined>(undefined);
   public table = this.sourceTable.asReadonly();
 
+  private sourceRates = signal<Array<IRate> | undefined>(undefined);
+  public rates = this.sourceRates.asReadonly();
+
   constructor(private httpClient: HttpClient) { }
+
+  public getRates() {
+    return forkJoin([this.getTable('a'), this.getTable('b'), this.getTable('c')])
+      .pipe(
+        tap(res => this.setSourceRates(res)),
+      )
+  }
 
   public getTable(tableName: string) {
     return this.httpClient.get<Array<ITable>>(`${this.baseUrl}/${tableName}`)
@@ -30,7 +41,16 @@ export class TableService {
       )
   }
 
+  public getTodayTable(tableName: string) {
+    return this.httpClient.get<Array<ITable>>(`${this.baseUrl}/${tableName}/today`)
+
+  }
+
   private setSourceTable(table: ITable) {
     this.sourceTable.set(table);
+  }
+
+  private setSourceRates(tables: Array<ITable>) {
+    this.sourceRates.set(tables.flatMap(table => table.rates).filter(rate => !!rate.mid));
   }
 }
