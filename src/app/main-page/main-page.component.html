@@ -5,7 +5,7 @@
                 <label for="type" class="block font-medium leading-6">Typ tabeli:</label>
                 <div>
                     <select id="type" formControlName="type"
-                        class="block w-full rounded-md border-0 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-500 "
+                        class="block w-full rounded-md border-0 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-500"
                         (change)="changeTableType()">
                         <option value="{{tableTypes.A}}">{{tableTypes.A}}</option>
                         <option value="{{tableTypes.B}}">{{tableTypes.B}}</option>
@@ -46,7 +46,7 @@
         </thead>
         @for (rate of tableService.table()?.rates; track $index) {
         <tbody>
-            <tr class="odd:bg-white even:bg-gray-400 border-b">
+            <tr class="even:bg-slate-50 odd:bg-white  border-b">
                 <td class="px-6 py-4 font-medium whitespace-nowrap">{{rate.currency}}</td>
                 <td class="px-6 py-4">{{rate.code}}</td>
                 @if(midValueExist()) {
